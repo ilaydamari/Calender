@@ -1,293 +1,253 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>תוכנית יומית – שיט נשים לפקדה</title>
+  <meta charset="UTF-8" />
+  <title>תוכנית יומית</title>
+
+  <!-- טיפוגרפיה וניראות בסיס -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;700&display=swap" rel="stylesheet">
+
   <style>
-    :root{
-      --bg:#0f172a;          /* slate-900 */
-      --card:#111827;        /* gray-900 */
-      --muted:#94a3b8;       /* slate-400 */
-      --text:#e5e7eb;        /* gray-200 */
-      --accent:#38bdf8;      /* sky-400 */
-      --accent-2:#22c55e;    /* green-500 */
-      --danger:#ef4444;      /* red-500 */
-      --border:#1f2937;      /* gray-800 */
-    }
-    *{box-sizing:border-box}
+    /* ===== עטיפה מרכזית בגודל A4 (ללא שינוי לכללים שלך) ===== */
+    html, body { height: 100%; }
     body{
-      margin:0; background:linear-gradient(180deg,#0b1224, #0f172a);
-      color:var(--text); font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
-      min-height:100dvh; display:flex; justify-content:center; padding:24px;
+      margin:0;
+      background:#f3f6f7;
+      color:#1e4a5d;
+      font-family:'Heebo', Arial, sans-serif;
+      line-height:1.5;
+      display:flex; justify-content:center;
+      padding:16px;
     }
-    .container{
-      width:min(1200px,100%); display:grid; gap:20px;
-      grid-template-columns: 1fr;
+    .page{
+      width:210mm;              /* רוחב A4 */
+      max-width:100%;
+      background:#8fc9dd;
+      border:1px solid rgba(135,206,235,.35);
+      border-radius:10px;
+      padding:12mm;
+      box-shadow:0 8px 24px rgba(30,74,93,.12);
+      padding-bottom: 40mm;   /* רווח לבן בתחתית */
+      min-height: 297mm;      /* גובה מלא של A4 */
+      box-sizing: border-box;
     }
-    header{
-      background:radial-gradient(1200px 500px at 90% -10%, rgba(56,189,248,0.18), transparent),
-                 radial-gradient(900px 400px at 0% -10%, rgba(34,197,94,0.15), transparent);
-      border:1px solid var(--border);
-      padding:24px; border-radius:18px;
-    }
-    h1{margin:0 0 6px 0; font-size:clamp(22px,3.2vw,34px)}
-    .sub{color:var(--muted); font-size:14px}
-    .grid{
-      display:grid; gap:20px;
-      grid-template-columns: 1.2fr 0.8fr;
-    }
-    @media (max-width: 900px){ .grid{grid-template-columns: 1fr} }
-    .card{
-      background:var(--card); border:1px solid var(--border);
-      border-radius:16px; padding:18px;
-    }
-    .card h2{margin:0 0 12px 0; font-size:18px}
-    .toolbar{display:flex; gap:10px; flex-wrap:wrap; margin-bottom:10px}
-    button,.btn{
-      background:var(--accent); color:#001018; border:none; padding:10px 14px;
-      border-radius:12px; font-weight:600; cursor:pointer;
-    }
-    .btn.secondary{ background:#334155; color:#e2e8f0 }
-    .btn.success{ background:var(--accent-2); color:#06240f }
-    .btn.danger{ background:var(--danger); color:#2a0202 }
-    table{width:100%; border-collapse:collapse; overflow:hidden; border-radius:12px; border:1px solid var(--border)}
-    thead th{
-      text-align:right; font-weight:700; background:#0b1224; color:#cbd5e1; padding:10px;
-      border-bottom:1px solid var(--border);
-    }
-    td{padding:8px 10px; border-bottom:1px solid var(--border)}
-    tr:last-child td{border-bottom:none}
-    input[type="text"], input[type="url"], textarea{
-      width:100%; background:#0b1224; color:var(--text);
-      border:1px solid var(--border); padding:10px 12px; border-radius:10px;
-    }
-    .row-actions{display:flex; gap:8px}
-    .pair{display:grid; gap:10px; grid-template-columns: 1fr 120px}
-    .muted{color:var(--muted); font-size:13px}
-    .media{
-      display:grid; gap:16px; grid-template-columns: 1fr;
-    }
-    .preview{
-      display:grid; grid-template-columns: 1fr 1fr; gap:16px;
-    }
-    @media (max-width: 700px){ .preview{grid-template-columns:1fr} }
-    .img-wrap, .yt-wrap{
-      background:#0b1224; border:1px solid var(--border); border-radius:12px; padding:12px; min-height:220px;
-      display:flex; align-items:center; justify-content:center; overflow:hidden;
-    }
-    .img-wrap img{max-width:100%; max-height:360px; border-radius:10px; object-fit:cover}
-    .yt-wrap iframe{width:100%; aspect-ratio:16/9; border:0}
-    .footerbar{display:flex; gap:10px; flex-wrap:wrap; justify-content:space-between; align-items:center}
-    .print-hint{font-size:13px; color:var(--muted)}
+    @page{ size:A4; margin:12mm; }
     @media print{
-      body{background:#fff; color:#000; padding:0}
-      header,.footerbar .btn{display:none}
-      .card{border:1px solid #aaa}
-      .img-wrap,.yt-wrap{border:1px solid #aaa}
+      body{ background:#fff; padding:0; }
+      .page{ width:auto; padding:0; margin:0; box-shadow:none; border:none; }
+    }
+  </style>
+
+  <style>
+    /* ===== ה-CSS שלך כפי ששלחת (בלי שינוי ערכים) ===== */
+    .logo-container {
+      text-align: center;
+      margin-bottom: 8px;
+      padding: 6px;
+      background: rgba(255, 255, 255, 0.8);
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(30, 74, 93, 0.1);
+    }
+    .logo-container img {
+      max-width: 420px;
+      height: auto;
+    }
+
+    h1 {
+      color: #1e4a5d;
+      text-align: center;
+      font-size: 1.4em;
+      margin: 8px 0;
+      font-weight: 500;
+      text-shadow: 1px 1px 3px rgba(135, 206, 235, 0.3);
+    }
+
+    .schedule-table {
+      width: 100%;
+      margin: 8px 0;
+      border-collapse: collapse;
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 6px;
+      overflow: hidden;
+      box-shadow: 0 2px 6px rgba(30, 74, 93, 0.15);
+    }
+    .schedule-table th {
+      background: linear-gradient(135deg, #1e4a5d, #4a90a4);
+      color: white;
+      padding: 5px;
+      font-size: 0.85em;
+      font-weight: 500;
+      text-align: center;
+      border: none;
+    }
+    .schedule-table td {
+      padding: 3px 5px;
+      border-bottom: 1px solid rgba(135, 206, 235, 0.3);
+      vertical-align: middle;
+    }
+
+    .time-input,
+    .activity-input {
+      border: 1px solid rgba(74, 144, 164, 0.3);
+      border-radius: 3px;
+      padding: 4px 6px;
+      font-size: 12px;
+      width: 100%;
+      box-sizing: border-box;
+      background: rgba(255, 255, 255, 0.8);
+    }
+    .time-input { width: 70px; text-align: center; }
+
+    .section-header {
+      background: linear-gradient(135deg, #4a90a4, #87ceeb);
+      color: white;
+      padding: 6px 12px;
+      margin: 10px 0 6px 0;
+      border-radius: 6px;
+      font-size: 1em;
+      font-weight: 500;
+      text-align: center;
+      box-shadow: 0 2px 6px rgba(74, 144, 164, 0.2);
+      position: relative;
+    }
+
+    .tips-container,
+    .media-container {
+      background: rgba(255, 255, 255, 0.9);
+      padding: 8px;
+      border-radius: 6px;
+      margin: 8px 0;
+      border: 1px solid rgba(135, 206, 235, 0.4);
+      box-shadow: 0 2px 6px rgba(30, 74, 93, 0.1);
+    }
+
+    .tips-textarea {
+      width: 100%;
+      height: 60px;
+      border: 1px solid rgba(74, 144, 164, 0.3);
+      border-radius: 4px;
+      padding: 6px;
+      font-size: 12px;
+      font-family: 'Heebo', Arial, sans-serif;
+      background: rgba(255, 255, 255, 0.8);
+      color: #1e4a5d;
+      resize: vertical;
+      line-height: 1.3;
+    }
+    .tips-textarea:focus { outline: none; border-color: #4a90a4; }
+
+    .media-section { display: flex; flex-direction: column; gap: 6px; }
+    .media-item {
+      background: rgba(248, 248, 250, 0.8);
+      padding: 6px;
+      border-radius: 4px;
+      border: 1px solid rgba(135, 206, 235, 0.3);
+    }
+    .media-item h4 {
+      color: #1e4a5d;
+      margin-bottom: 4px;
+      font-size: 0.85em;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .media-input {
+      width: 100%;
+      border: 1px solid rgba(74, 144, 164, 0.3);
+      border-radius: 3px;
+      padding: 4px;
+      font-size: 11px;
+      font-family: 'Heebo', Arial, sans-serif;
+      background: white;
+      color: #1e4a5d;
+    }
+    .help-text {
+      font-size: 0.7em;
+      color: #4a90a4;
+      margin-top: 2px;
+      font-style: italic;
     }
   </style>
 </head>
+
 <body>
-  <main class="container">
-    <header>
-      <h1>תוכנית יומית – יום</h1>
-      <div class="sub">לוח זמנים • טיפים ליום • תמונה יומית • שיר/מוזיקה ליום</div>
-    </header>
+  <div class="page"><!-- עטיפת A4 במרכז -->
 
-    <section class="grid">
-      <!-- לוח זמנים -->
-      <div class="card">
-        <h2>לוח זמנים (שעה → פעילות)</h2>
-        <div class="toolbar">
-          <button id="addRow" class="btn">הוספת שורה</button>
-          <button id="clearAll" class="btn danger">איפוס לוח זמנים</button>
+    <div class="logo-container">
+      <img src="c:\Users\ilayd\Desktop\Portfolio\HTML\logo.jpg" alt="לוגו">
+    </div>
+
+    <h1>כותרת ראשית</h1>
+
+    <!-- לוח זמנים -->
+    <table class="schedule-table">
+      <thead>
+        <tr>
+          <th>פעילות</th>
+          <th>שעה</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><input class="activity-input" type="text" placeholder="תיאור הפעילות..."></td>
+          <td><input class="time-input" type="text" value="08:00"></td>
+        </tr>
+        <tr>
+          <td><input class="activity-input" type="text" placeholder="תיאור הפעילות..."></td>
+          <td><input class="time-input" type="text" value="09:30"></td>
+        </tr>
+        <tr>
+          <td><input class="activity-input" type="text" placeholder="תיאור הפעילות..."></td>
+          <td><input class="time-input" type="text" value="11:00"></td>
+        </tr>
+        <tr>
+          <td><input class="activity-input" type="text" placeholder="תיאור הפעילות..."></td>
+          <td><input class="time-input" type="text" value="12:30"></td>
+        </tr>
+        <tr>
+          <td><input class="activity-input" type="text" placeholder="תיאור הפעילות..."></td>
+          <td><input class="time-input" type="text" value="14:00"></td>
+        </tr>
+        <tr>
+          <td><input class="activity-input" type="text" placeholder="תיאור הפעילות..."></td>
+          <td><input class="time-input" type="text" value="15:30"></td>
+        </tr>
+        <tr>
+          <td><input class="activity-input" type="text" placeholder="תיאור הפעילות..."></td>
+          <td><input class="time-input" type="text" value="17:00"></td>
+        </tr>
+        <tr>
+          <td><input class="activity-input" type="text" placeholder="תיאור הפעילות..."></td>
+          <td><input class="time-input" type="text" value="20:00"></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- טיפים -->
+    <div class="section-header">טיפים ליום</div>
+    <div class="tips-container">
+      <textarea class="tips-textarea" placeholder="רשמי כאן טיפים..."></textarea>
+    </div>
+
+    <!-- מדיה -->
+    <div class="section-header">תמונה ושיר היום</div>
+    <div class="media-container">
+      <div class="media-section">
+        <div class="media-item">
+          <h4>תמונה יומית 📷</h4>
+          <input class="media-input" type="url" placeholder="הדביקי קישור לתמונה" />
+          <div class="help-text">ניתן להדביק קישור ישיר לתמונה (‎.jpg/.png)</div>
         </div>
-        <table id="schedule">
-          <thead>
-            <tr>
-              <th style="width:140px">שעה</th>
-              <th>פעילות</th>
-              <th style="width:160px">פעולות</th>
-            </tr>
-          </thead>
-          <tbody></tbody>
-        </table>
-      </div>
-
-      <!-- טיפים -->
-      <div class="card">
-        <h2>טיפים ליום</h2>
-        <textarea id="tips" rows="12" placeholder="כתבי כאן טיפים, תזכורות ומסרים יומיים..."></textarea>
-        <div class="muted" style="margin-top:6px">נשמר אוטומטית בדפדפן שלך.</div>
-      </div>
-    </section>
-
-    <!-- תמונה ושיר -->
-    <section class="card">
-      <h2>תמונה ושיר היום</h2>
-      <div class="media">
-        <div class="pair">
-          <input id="imgUrl" type="url" placeholder="לינק לתמונה (אפשר מגוגל/וואטסאפ – לינק ישיר)" />
-          <button id="loadImg" class="btn secondary">טעני תמונה</button>
-        </div>
-        <div class="pair">
-          <input id="ytUrl" type="url" placeholder="לינק לשיר (YouTube/מוזיקה – YouTube יוטמע אוטומטית)" />
-          <button id="loadYt" class="btn secondary">טעני שיר</button>
-        </div>
-
-        <div class="preview">
-          <div class="img-wrap" id="imgWrap">
-            <span class="muted">תצוגת תמונה תופיע כאן</span>
-          </div>
-          <div class="yt-wrap" id="ytWrap">
-            <span class="muted">תצוגת וידאו/נגן תופיע כאן (YouTube)</span>
-          </div>
+        <div class="media-item">
+          <h4>שיר/מוזיקה ליום 🎵</h4>
+          <input class="media-input" type="url" placeholder="קישור ל-YouTube" />
+          <div class="help-text">הדביקי את קישור ה-YouTube של השיר</div>
         </div>
       </div>
-      <div class="muted" style="margin-top:8px">
-        אפשר להדביק: קישור תמונה ישיר (‎.jpg/.png) • קישור YouTube (נחלץ מזה את ה־ID ונבנה iframe)
-      </div>
-    </section>
+    </div>
 
-    <!-- סרגל תחתון -->
-    <section class="footerbar">
-      <div class="btn success" id="saveAll">שמירה ידנית</div>
-      <div class="btn secondary" id="exportJson">ייצוא JSON</div>
-      <div class="btn" id="importJson">ייבוא JSON</div>
-      <div class="btn secondary" id="printPage">הדפסה / PDF</div>
-      <div class="print-hint">טיפ: לפני הדפסה אפשר למזער/להרחיב רכיבים, והדף יתאים את עצמו.</div>
-      <input id="importFile" type="file" accept="application/json" style="display:none" />
-    </section>
-  </main>
-
-  <script>
-    // ===== Utilities =====
-    const $ = sel => document.querySelector(sel);
-    const scheduleBody = $('#schedule tbody');
-
-    function saveState(){
-      const rows = [...scheduleBody.querySelectorAll('tr')].map(tr => {
-        return {
-          time: tr.querySelector('input[name="time"]').value.trim(),
-          activity: tr.querySelector('input[name="activity"]').value.trim()
-        };
-      });
-      const state = {
-        schedule: rows,
-        tips: $('#tips').value,
-        imgUrl: $('#imgUrl').value,
-        ytUrl: $('#ytUrl').value
-      };
-      localStorage.setItem('dailyPlan', JSON.stringify(state));
-    }
-    function loadState(){
-      const raw = localStorage.getItem('dailyPlan');
-      if(!raw){ addRow(); addRow(); return; }
-      try{
-        const s = JSON.parse(raw);
-        (s.schedule || []).forEach(r => addRow(r.time, r.activity));
-        $('#tips').value = s.tips || '';
-        if(s.imgUrl){ $('#imgUrl').value = s.imgUrl; loadImage(); }
-        if(s.ytUrl){ $('#ytUrl').value = s.ytUrl; loadYouTube(); }
-      }catch(e){ addRow(); }
-    }
-
-    // ===== Schedule =====
-    function addRow(time='', activity=''){
-      const tr = document.createElement('tr');
-      tr.innerHTML = `
-        <td><input name="time" type="text" placeholder="לדוגמה: 08:30" value="${time}"></td>
-        <td><input name="activity" type="text" placeholder="לדוגמה: התכנסות, תדרוך בטיחות" value="${activity}"></td>
-        <td class="row-actions">
-          <button class="btn secondary" data-act="dup">שכפול</button>
-          <button class="btn danger" data-act="del">מחיקה</button>
-        </td>`;
-      scheduleBody.appendChild(tr);
-      tr.addEventListener('input', saveState);
-      tr.querySelector('[data-act="del"]').addEventListener('click', () => { tr.remove(); saveState(); });
-      tr.querySelector('[data-act="dup"]').addEventListener('click', () => {
-        addRow(tr.querySelector('input[name="time"]').value, tr.querySelector('input[name="activity"]').value);
-        saveState();
-      });
-    }
-
-    // ===== Image preview =====
-    function loadImage(){
-      const url = $('#imgUrl').value.trim();
-      const wrap = $('#imgWrap');
-      wrap.innerHTML = '';
-      if(!url){ wrap.innerHTML = '<span class="muted">לא ניתן לטעון תמונה – אין קישור</span>'; return; }
-      const img = new Image();
-      img.alt = 'תמונה יומית';
-      img.onload = () => { wrap.innerHTML=''; wrap.appendChild(img); saveState(); };
-      img.onerror = () => { wrap.innerHTML = '<span class="muted">טעינת תמונה נכשלה. ודאי שזה לינק ישיר לקובץ תמונה.</span>'; };
-      img.src = url;
-    }
-
-    // ===== YouTube embed =====
-    function youtubeId(u){
-      // תומך בקישורי youtu.be, youtube.com/watch?v=, /embed/, עם/בלי פרמטרים
-      const m =
-        u.match(/youtu\.be\/([A-Za-z0-9_-]{6,})/) ||
-        u.match(/v=([A-Za-z0-9_-]{6,})/) ||
-        u.match(/\/embed\/([A-Za-z0-9_-]{6,})/);
-      return m ? m[1] : null;
-    }
-    function loadYouTube(){
-      const url = $('#ytUrl').value.trim();
-      const wrap = $('#ytWrap');
-      wrap.innerHTML = '';
-      if(!url){ wrap.innerHTML = '<span class="muted">לא ניתן להטמיע – אין קישור</span>'; return; }
-      const id = youtubeId(url);
-      if(!id){ wrap.innerHTML = '<span class="muted">לא זוהה מזהה YouTube. ודאי שהקישור תקין.</span>'; return; }
-      const ifr = document.createElement('iframe');
-      ifr.allowFullscreen = true;
-      ifr.src = `https://www.youtube.com/embed/${id}`;
-      wrap.appendChild(ifr);
-      saveState();
-    }
-
-    // ===== Export / Import / Print =====
-    function exportJson(){
-      const blob = new Blob([localStorage.getItem('dailyPlan') || '{}'], {type:'application/json'});
-      const a = document.createElement('a');
-      a.href = URL.createObjectURL(blob);
-      a.download = 'daily-plan.json';
-      a.click();
-      URL.revokeObjectURL(a.href);
-    }
-
-    function importJson(file){
-      const reader = new FileReader();
-      reader.onload = () => {
-        try{
-          localStorage.setItem('dailyPlan', reader.result);
-          // נרענן דף כדי לטעון את המצב שיובא
-          location.reload();
-        }catch(e){ alert('ייבוא נכשל: קובץ לא תקין'); }
-      };
-      reader.readAsText(file);
-    }
-
-    // ===== Events =====
-    $('#addRow').addEventListener('click', () => { addRow(); saveState(); });
-    $('#clearAll').addEventListener('click', () => {
-      if(confirm('לאפס את לוח הזמנים?')){ scheduleBody.innerHTML=''; addRow(); saveState(); }
-    });
-    $('#tips').addEventListener('input', saveState);
-    $('#loadImg').addEventListener('click', loadImage);
-    $('#loadYt').addEventListener('click', loadYouTube);
-    $('#saveAll').addEventListener('click', saveState);
-    $('#exportJson').addEventListener('click', exportJson);
-    $('#importJson').addEventListener('click', () => $('#importFile').click());
-    $('#importFile').addEventListener('change', e => {
-      if(e.target.files?.[0]) importJson(e.target.files[0]);
-    });
-    $('#printPage').addEventListener('click', () => window.print());
-
-    // ===== Init =====
-    loadState();
-  </script>
+  </div><!-- /.page -->
 </body>
 </html>
